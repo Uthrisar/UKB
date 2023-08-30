@@ -7,7 +7,7 @@ var typed = new Typed(".text", {
 });
 
 var my_name = new Typed(".tet",{
-    strings: ["Uthrisar Khungur Boro"],
+    strings: ["Uthrisar Kh Boro"],
     typeSpeed: 100,
     backSpeed: 100,
     backDelay: 500,
