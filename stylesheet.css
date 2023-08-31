@@ -19,11 +19,12 @@ body
     left: 0;
     width: 100%;
     padding: 20px 10%;
-    background: transparent;
+    background: blueviolet;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .logo
@@ -32,7 +33,7 @@ body
     font-size: 20px;
     color: #fff;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     cursor: default;
     opacity: 0;
     animation: slideRight 1s ease forwards;
@@ -52,6 +53,11 @@ body
 .navbar a:hover {
     color: #0ef;
 }
+
+.hide-navbar {
+    transform: translateY(-100%);
+}
+
 
 .home {
     position: relative;
@@ -99,9 +105,9 @@ body
 .home-content h4 {
     color: cyan;
     margin-bottom: 10px;
-    margin-left: 17%;
+    margin-left: 22%;
     margin-top: 20px;
-    font-size: 32px;
+    font-size: 25px;
     font-weight: 100;
     opacity: 0;
     animation: slideBottom 1s ease forwards;
