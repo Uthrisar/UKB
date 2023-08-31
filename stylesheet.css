@@ -29,7 +29,7 @@ body
 .logo
 {
     position: relative;
-    font-size: 25px;
+    font-size: 20px;
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -40,10 +40,10 @@ body
 
 .navbar a {
     display: inline-block;
-    font-size: 25px;
+    font-size: 15px;
     color: #fff;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 300;
     margin-left: 35px;
     animation: slideTop .5s ease forwards;
     animation-delay: calc(.2s * var(--i));
