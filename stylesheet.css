@@ -248,13 +248,16 @@ body
 }
 
 .services-list {
-    display: grid;
+    display: flex;
+    flex-direction: row;
     grid-template-rows: repeat(auto-fit, minmax(259px, 1fr));
-    grid-gap: 40px;
-    margin-top: 50px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .services-list div{
+    flex: 1;
     background-color: transparent;
     padding: 40px;
     font-size: 13px;
@@ -263,7 +266,8 @@ body
     border-radius: 20px;
     transition: background 0.5s, transform 0.5s;
     box-shadow: 1px 1px 20px #012290f7,
-                1px 1px 40px #0053b8f7
+                1px 1px 40px #0053b8f7;
+   margin: 10px;
 }
 
 .services-list div i {
