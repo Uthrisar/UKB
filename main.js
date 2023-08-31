@@ -22,3 +22,16 @@ var about_me = new Typed(".tet2", {
     loop: true
 })
 
+let prevScrollPos = window.pageYOffset;
+
+window.onscroll = function() {
+    let currentScrollPos = window.pageYOffset;
+    
+    if (prevScrollPos > currentScrollPos) {
+        document.querySelector(".header").classList.remove("hide-navbar");
+    } else {
+        document.querySelector(".header").classList.add("hide-navbar");
+    }
+    
+    prevScrollPos = currentScrollPos;
+};
