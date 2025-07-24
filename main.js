@@ -5,13 +5,14 @@ var my_name = new Typed(".text1",{
     backDelay: 800,
     loop: true
 })
-var typed = new Typed(".text2", {
-    strings: ["Coder.", "a CP Enthusiast.", " a Web Developer."],
-    typeSpeed: 80,
-    backSpeed: 80,
-    backDelay: 1000,
-    loop: true
-});
+
+// var typed = new Typed(".text2", {
+//     strings: ["Coder.", "a CP Enthusiast.", " a Web Developer."],
+//     typeSpeed: 80,
+//     backSpeed: 80,
+//     backDelay: 1000,
+//     loop: true
+// });
 
 
 // var about_me_1 = new Typed(".text3", {
