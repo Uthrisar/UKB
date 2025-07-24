@@ -1,7 +1,7 @@
 var my_name = new Typed(".text1",{
     strings: ["Mathematics and Computing", "At IIT Guwahati."],
-    typeSpeed: 50,
-    backSpeed: 50,
+    typeSpeed: 40,
+    backSpeed: 30,
     backDelay: 800,
     loop: true
 })
