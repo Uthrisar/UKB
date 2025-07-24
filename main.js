@@ -14,24 +14,24 @@ var typed = new Typed(".text2", {
 });
 
 
-var about_me_1 = new Typed(".text3", {
-    strings: ["I am a skilled web designer with over 2 years of experience, eager to dive deep into the Machine Learning, love to think roots and problems of Mathematics, want to solve Real World Problem to various field using technology."],
-    typeSpeed: 40,
-    backSpeed: 40,
-    backDelay: 100,
-    loop: true
-})
+// var about_me_1 = new Typed(".text3", {
+//     strings: ["I am a skilled web designer with over 2 years of experience, eager to dive deep into the Machine Learning, love to think roots and problems of Mathematics, want to solve Real World Problem to various field using technology."],
+//     typeSpeed: 40,
+//     backSpeed: 40,
+//     backDelay: 100,
+//     loop: true
+// })
 
 let prevScrollPos = window.pageYOffset;
 
 window.onscroll = function() {
     let currentScrollPos = window.pageYOffset;
-    
+
     if (prevScrollPos > currentScrollPos) {
         document.querySelector(".header").classList.remove("hide-navbar");
     } else {
         document.querySelector(".header").classList.add("hide-navbar");
     }
-    
+
     prevScrollPos = currentScrollPos;
 };
