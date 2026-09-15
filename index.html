@@ -1,60 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UTHRISAR</title>
-    <link rel="stylesheet" href="stylesheet-1.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jirirani</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Parisienne&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#2a0e1a;
+    --plum:#5c1f37;
+    --rose:#e0607e;
+    --rose-bright:#ff8fa3;
+    --blush:#ffe3ea;
+    --cream:#fff6f3;
+    --gold:#e8b7a0;
+    --text-deep:#3a1220;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:'Jost', sans-serif;
+    background:var(--wine);
+    color:var(--cream);
+    overflow-x:hidden;
+    scroll-snap-type: y proximity;
+    height:100vh;
+    height:100dvh;
+    overflow-y:scroll;
+  }
+
+  section{
+    height:100vh;
+    height:100dvh;
+    width:100%;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    perspective:1200px;
+  }
+
+  /* ---------- Ambient petal / particle layer ---------- */
+  .petals{ position:absolute; inset:0; pointer-events:none; z-index:1; }
+  .petal{
+    position:absolute;
+    top:-40px;
+    border-radius:50% 0 50% 50%;
+    background:linear-gradient(135deg, var(--rose-bright), var(--rose));
+    opacity:.55;
+    animation:fall linear infinite;
+    transform-style:preserve-3d;
+    filter:blur(.2px);
+  }
+  @keyframes fall{
+    0%{ transform:translate3d(0,-10vh,0) rotate(0deg) translateZ(0); opacity:0; }
+    10%{ opacity:.6; }
+    90%{ opacity:.5; }
+    100%{ transform:translate3d(20px,110vh,60px) rotate(300deg) translateZ(60px); opacity:0; }
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{ background:radial-gradient(circle at 50% 30%, var(--plum) 0%, var(--wine) 70%); }
+
+  .eyebrow{
+    letter-spacing:.45em;
+    text-transform:uppercase;
+    font-size:.7rem;
+    color:var(--gold);
+    opacity:0;
+    animation:riseIn 1.2s ease forwards .3s;
+    z-index:2;
+  }
+
+  .name-script{
+    font-family:'Parisienne', cursive;
+    font-size:clamp(3.2rem, 10vw, 7rem);
+    color:var(--rose-bright);
+    text-shadow: 0 0 25px rgba(255,143,163,.55), 0 4px 30px rgba(0,0,0,.4);
+    margin:.2em 0 0;
+    opacity:0;
+    transform:translateY(30px) rotateX(20deg);
+    animation:riseIn3d 1.4s cubic-bezier(.2,.8,.2,1) forwards .8s;
+    z-index:2;
+  }
+
+  .full-name{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1rem, 2.4vw, 1.4rem);
+    letter-spacing:.08em;
+    color:var(--blush);
+    opacity:0;
+    animation:riseIn 1.2s ease forwards 1.8s;
+    z-index:2;
+  }
+
+  .scroll-hint{
+    position:absolute; bottom:2.2rem;
+    font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold); opacity:.7;
+    display:flex; flex-direction:column; align-items:center; gap:.5rem;
+    animation:fadeInOnly 1s ease forwards 2.6s;
+    opacity:0;
+    z-index:2;
+  }
+  .scroll-hint span{
+    width:1px; height:26px; background:linear-gradient(var(--gold), transparent);
+    animation:hintMove 1.8s ease-in-out infinite;
+  }
+  @keyframes hintMove{ 0%,100%{ transform:translateY(0); opacity:.4;} 50%{ transform:translateY(8px); opacity:1;} }
+
+  @keyframes riseIn{ to{ opacity:1; } }
+  @keyframes riseIn3d{ to{ opacity:1; transform:translateY(0) rotateX(0); } }
+  @keyframes fadeInOnly{ to{ opacity:.7; } }
+
+  /* ---------- PHOTO SECTION ---------- */
+  #photo{ background:radial-gradient(circle at 50% 40%, var(--plum) 0%, var(--wine) 75%); }
+
+  /* UPDATED: Adjusted width and aspect ratio for landscape images */
+  .frame-wrap{
+    width:min(90vw, 560px); /* Widened the frame */
+    aspect-ratio:16/9; /* Changed from 3/4 to 16/9 landscape */
+    position:relative;
+    transform-style:preserve-3d;
+    z-index:2;
+  }
+
+  .frame{
+    width:100%; height:100%;
+    border-radius:14px;
+    background:linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.02));
+    border:1px solid rgba(232,183,160,.45);
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 0 60px rgba(255,143,163,.18),
+      inset 0 0 0 1px rgba(255,255,255,.05);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    transform:rotateY(0deg) rotateX(0deg);
+    transition:transform .15s ease-out;
+    will-change:transform;
+  }
+
+  .frame img{
+    width:100%; height:100%; object-fit:cover; /* Keeps image perfectly filling the frame */
+    display:block;
+  }
+
+  .frame-glow{
+    position:absolute; inset:-30px;
+    background:radial-gradient(circle, rgba(255,143,163,.25), transparent 70%);
+    z-index:-1;
+    filter:blur(10px);
+  }
+
+  .caption{
+    margin-top:2.4rem;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1.1rem,2.6vw,1.5rem);
+    color:var(--blush);
+    opacity:.9;
+    z-index:2;
+    text-align:center;
+    padding:0 1.5rem;
+  }
+
+  /* ---------- QUALITIES SECTION ---------- */
+  #qualities{
+    background:linear-gradient(180deg, var(--wine) 0%, var(--plum) 55%, #7a2c46 100%);
+  }
+  .qualities-title{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1.6rem,3.4vw,2.4rem);
+    color:var(--rose-bright);
+    margin-bottom:2.6rem;
+    text-align:center;
+    z-index:2;
+  }
+  .cards{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:1.4rem;
+    max-width:900px; padding:0 1.5rem;
+    z-index:2;
+  }
+  .card{
+    width:210px; padding:1.8rem 1.4rem;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    backdrop-filter:blur(6px);
+    text-align:center;
+    transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+  }
+  .card:hover{
+    transform:translateY(-10px) rotateX(6deg) rotateY(-6deg);
+    box-shadow:0 25px 45px rgba(0,0,0,.4), 0 0 30px rgba(255,143,163,.25);
+  }
+  .card .glyph{ font-size:1.6rem; margin-bottom:.7rem; display:block; }
+  .card h3{
+    font-family:'Cormorant Garamond', serif; font-weight:500;
+    font-size:1.15rem; color:var(--rose-bright); margin-bottom:.5rem;
+  }
+  .card p{ font-size:.82rem; line-height:1.5; color:var(--blush); opacity:.85; }
+
+  /* ---------- CLOSING SECTION ---------- */
+  #closing{
+    background:radial-gradient(circle at 50% 60%, #ffd8e0 0%, var(--blush) 55%, #ffe9ee 100%);
+    color:var(--text-deep);
+  }
+  #closing .name-script{
+    color:#c9184a;
+    text-shadow:0 0 30px rgba(255,143,163,.6);
+  }
+  #closing .note{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1.1rem,2.6vw,1.6rem);
+    max-width:560px; text-align:center; line-height:1.7;
+    margin-top:1.4rem; padding:0 1.5rem;
+    color:#5c1f37;
+    z-index:2;
+  }
+  #closing .sign{
+    margin-top:2.2rem;
+    font-size:.75rem; letter-spacing:.35em; text-transform:uppercase;
+    color:#a4415f; z-index:2;
+  }
+
+  /* ---------- Mobile adjustments ---------- */
+  @media (max-width:600px){
+    .eyebrow{ font-size:.6rem; letter-spacing:.32em; text-align:center; padding:0 1.2rem; }
+
+    /* Updated for mobile landscape frame */
+    .frame-wrap{ width:min(92vw, 400px); }
+
+    .caption{ margin-top:1.6rem; font-size:1rem; padding:0 2rem; }
+
+    .qualities-title{ margin-bottom:1.6rem; padding:0 1.2rem; }
+
+    .cards{
+      flex-direction:column;
+      align-items:center;
+      gap:1rem;
+      max-height:62vh;
+      overflow-y:auto;
+      padding:0 1.2rem 0.5rem;
+    }
+    .card{ width:100%; max-width:280px; padding:1.3rem 1.2rem; }
+    .card:hover{ transform:none; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+
+    #closing .note{ padding:0 1.6rem; font-size:1rem; }
+
+    .scroll-hint{ bottom:1.4rem; }
+  }
+
+  @media (max-width:600px) and (max-height:640px){
+    .name-script{ font-size:clamp(2.4rem, 14vw, 4rem); }
+    section{ padding-top:1rem; padding-bottom:1rem; }
+  }
+
+  /* Landscape phones: shrink vertical rhythm so content doesn't clip */
+  @media (max-height:480px) and (orientation:landscape){
+    .name-script{ font-size:clamp(2rem, 8vw, 3rem); margin:.1em 0 0; }
+    .frame-wrap{ width:min(70vh, 400px); }
+    .cards{ flex-direction:row; flex-wrap:nowrap; overflow-x:auto; max-height:none; }
+    .card{ min-width:180px; }
+  }
+</style>
 </head>
 <body>
-    <header class="header">
-        <a href="#" class="logo">~UKB~</a>
 
-    </header>
-    <section class="home">
-        <div class="home-content"><i>
-            <h4>Hello, It's UKB</h4>
-            <img src="logo_ukb.png" alt="MyPhoto">
-            <div class="contain">
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-            </div>
-            <h1>Uthrisar Khungur Boro</h1>
-            <h2><span class="text1"></span></h2>
-            <h3>And I'm <span class="text2"></span></h3>
-            <p>And I'm a web Designer with extensive experience for&nbsp;over&nbsp;2&nbsp;years
-                <br>Expertise is to create and website design, Real&nbsp;World&nbsp;Problem&nbsp;Solving
-                and <br> many more...
-            </p>
-            <div class="home-sci">
-                <a href="https://www.facebook.com/dyy.boro" style="--i:7"><i class='bx bxl-facebook-circle'></i></a>
-                <a href="https://www.instagram.com/uthrisar_kh_boro/" style="--i:8"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://wa.me/8761824964" style="--i:9"><i class='bx bxl-whatsapp-square' ></i></a>
-                <a href="https://www.linkedin.com/in/uthrisar-khungur-boro-31ab31241/" style="--i:10"><i class='bx bxl-linkedin' ></i></a>
-                <a href="https://github.com/Uthrisar" style="--i:11"><i class='bx bxl-github' ></i></a>
-            </div></i>
-            <a href="https://uthrisar.github.io/Uthri" class="btn-box">More About Me</a>
-        </div>
-    <span class="home-imglover"></span>
-    </section>
+<!-- HERO -->
+<section id="hero">
+  <div class="petals" id="petals-hero"></div>
+  <div class="eyebrow">for the girl who makes ordinary days feel golden</div>
+  <h1 class="name-script">Jiri Rani</h1>
+  <p class="full-name">Jiri Basumatary</p>
+  <div class="scroll-hint">scroll<span></span></div>
+</section>
 
-    <section class="about" id="about">
-        <div class="about-img">
-            <img src="geometry_7_gif.gif" height="350px" alt="image">
-        </div>
-        <div class="about-text">
-            <h2>About<span>Me</span></h2>
-            <h4>Full Stack Developer</h4>
-            <p>
-                <span class="text3"></span>
-            </p>
+<!-- PHOTO -->
+<section id="photo">
+  <div class="petals" id="petals-photo"></div>
+  <div class="frame-wrap">
+    <div class="frame-glow"></div>
+    <div class="frame" id="tiltFrame">
+      <!-- UPDATED: Cleaned up placeholder text and code, just the image remains -->
+      <img src="image_1.jpeg" alt="Debo">
+    </div>
+  </div>
+  <p class="caption">every version of you is my favorite one</p>
+</section>
 
-        </div>
+<!-- QUALITIES -->
+<section id="qualities">
+  <div class="petals" id="petals-q"></div>
+  <h2 class="qualities-title">a few things I adore about her</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="glyph">✦</span>
+      <h3>Her Smile</h3>
+      <p>Warm enough to make any room feel like home.</p>
+    </div>
+    <div class="card">
+      <span class="glyph">❀</span>
+      <h3>Her Heart</h3>
+      <p>Gentle, kind, and quietly the strongest part of her.</p>
+    </div>
+    <div class="card">
+      <span class="glyph">✧</span>
+      <h3>Her Presence</h3>
+      <p>Everything feels softer and brighter when she's around.</p>
+    </div>
+  </div>
+</section>
 
-    </section>
-    <script src="main.js"></script>
+<!-- CLOSING -->
+<section id="closing">
+  <div class="eyebrow" style="color:#c9184a;">with all my heart</div>
+  <h2 class="name-script">Jiri Rani</h2>
+  <p class="note">Some names are just names. Yours feels like a favorite song I never get tired of hearing.</p>
+  <p class="sign">— always thinking of you</p>
+</section>
+
+<script>
+  // ---------- Petal generator ----------
+  function scatterPetals(containerId, count){
+    const el = document.getElementById(containerId);
+    for(let i=0;i<count;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 6 + Math.random()*10;
+      p.style.width = size + 'px';
+      p.style.height = size*0.85 + 'px';
+      p.style.left = Math.random()*100 + '%';
+      p.style.animationDuration = (7 + Math.random()*8) + 's';
+      p.style.animationDelay = (Math.random()*10) + 's';
+      el.appendChild(p);
+    }
+  }
+  scatterPetals('petals-hero', 14);
+  scatterPetals('petals-photo', 10);
+  scatterPetals('petals-q', 8);
+
+  // ---------- 3D tilt on photo frame ----------
+  const tiltFrame = document.getElementById('tiltFrame');
+  const wrap = tiltFrame.closest('.frame-wrap');
+  wrap.addEventListener('mousemove', (e)=>{
+    const r = wrap.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - 0.5;
+    const y = (e.clientY - r.top)/r.height - 0.5;
+    tiltFrame.style.transform = `rotateY(${x*16}deg) rotateX(${-y*16}deg) scale(1.02)`;
+  });
+  wrap.addEventListener('mouseleave', ()=>{
+    tiltFrame.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+  });
+  // gentle touch support
+  wrap.addEventListener('touchmove', (e)=>{
+    const t = e.touches[0];
+    const r = wrap.getBoundingClientRect();
+    const x = (t.clientX - r.left)/r.width - 0.5;
+    const y = (t.clientY - r.top)/r.height - 0.5;
+    tiltFrame.style.transform = `rotateY(${x*14}deg) rotateX(${-y*14}deg)`;
+  }, {passive:true});
+
+  // ---------- Auto slide top -> bottom ----------
+  const sections = Array.from(document.querySelectorAll('section'));
+  let idx = 0;
+  let autoTimer = null;
+  let userInteracted = false;
+  let resumeTimeout = null;
+
+  function goToSection(i){
+    if(i < 0 || i >= sections.length) return;
+    idx = i;
+    sections[i].scrollIntoView({behavior:'smooth'});
+  }
+
+  function startAutoScroll(){
+    clearInterval(autoTimer);
+    autoTimer = setInterval(()=>{
+      if(userInteracted) return;
+      if(idx < sections.length - 1){
+        goToSection(idx + 1);
+      } else {
+        clearInterval(autoTimer); // stop at the last section
+      }
+    }, 4200);
+  }
+
+  function pauseAutoTemporarily(){
+    userInteracted = true;
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(()=>{ userInteracted = false; }, 6000);
+  }
+
+  window.addEventListener('wheel', pauseAutoTemporarily, {passive:true});
+  window.addEventListener('touchstart', pauseAutoTemporarily, {passive:true});
+  window.addEventListener('keydown', pauseAutoTemporarily);
+
+  // keep idx in sync if the user scrolls manually
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        idx = sections.indexOf(entry.target);
+      }
+    });
+  }, {threshold:0.6});
+  sections.forEach(s=>io.observe(s));
+
+  window.addEventListener('load', startAutoScroll);
+</script>
+
 </body>
 </html>
